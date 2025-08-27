@@ -37,7 +37,7 @@ class ProfileController{
         // saves the user's input in the database
         $this->post->addPost($user_id, $content);
 
-        header("Location: index.php?action=index");
+        header("Location: index.php?controller=profile&action=index");
         exit;
     }
 
@@ -60,13 +60,13 @@ class ProfileController{
         // saves the updated information in the database
         $this->post->updatePost($id, $user_id, $content);
 
-        header("Location: index.php?action=index");
+        header("Location: index.php?controller=profile&action=index");
         exit;
     }
 
     public function delete($id){
         $this->post->deletePost($id);
-        header("Location: index.php?action=index");
+        header("Location: index.php?controller=profile&action=index");
     }
 }
 
