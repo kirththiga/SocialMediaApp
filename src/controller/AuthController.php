@@ -33,47 +33,98 @@ class AuthController
 
     public function register()
     {
-        $error = null;
+        // Collect errors and sticky form data
+        $errors = [];
+        $form = [
+            'first_name' => '',
+            'last_name' => '',
+            'username' => '',
+            'email' => '',
+            'gender' => '',
+            'birth_date' => '',
+            'location' => '',
+            'bio' => ''
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo = require __DIR__ . '/../../config/db.php';
             $user = new User($pdo);
 
-            $first_name = trim($_POST['first_name'] ?? '');
-            $last_name = trim($_POST['last_name'] ?? '');
-            $username = trim($_POST['username'] ?? '');
-            $email = trim($_POST['email'] ?? '');
+            // Grab inputs (trim strings)
+            $form['first_name'] = trim($_POST['first_name'] ?? '');
+            $form['last_name'] = trim($_POST['last_name'] ?? '');
+            $form['username'] = trim($_POST['username'] ?? '');
+            $form['email'] = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
             $confirm = $_POST['confirm_password'] ?? '';
-            $gender = $_POST['gender'] ?? '';
-            $birth_date = $_POST['birth_date'] ?? '';
+            $form['gender'] = $_POST['gender'] ?? '';
+            $form['birth_date'] = $_POST['birth_date'] ?? '';
+            $form['location'] = trim($_POST['location'] ?? '');
+            $form['bio'] = trim($_POST['bio'] ?? '');
 
+            // Required fields
             if (
-                $first_name === '' || $last_name === '' || $username === '' ||
-                $email === '' || $password === '' || $confirm === '' ||
-                $gender === '' || $birth_date === ''
+                $form['first_name'] === '' || $form['last_name'] === '' ||
+                $form['username'] === '' || $form['email'] === '' ||
+                $password === '' || $confirm === '' ||
+                $form['gender'] === '' || $form['birth_date'] === ''
             ) {
-                $error = 'Please fill in all required fields.';
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error = 'Invalid email.';
-            } elseif ($password !== $confirm) {
-                $error = 'Passwords do not match.';
-            } else {
-                $ok = $user->register($first_name, $last_name, $username, $email, $password, $gender, $birth_date);
+                $errors[] = 'Please fill in all required fields.';
+            }
+
+            // password length
+            if (strlen($password) < 8) {
+                $errors[] = 'Password must be at least 8 characters long.';
+            }
+
+            // Email format
+            if ($form['email'] !== '' && !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+                $errors[] = 'Invalid email.';
+            }
+
+            // Password match
+            if ($password !== $confirm) {
+                $errors[] = 'Passwords do not match.';
+            }
+
+            if ($form['email'] !== '' && $user->getUserByEmail($form['email'])) {
+                $errors[] = 'Email already exists.';
+            }
+            if ($form['username'] !== '' && $user->getUserByUsername($form['username'])) {
+                $errors[] = 'Username already exists.';
+            }
+
+            if (empty($errors)) {
+                // Perform registration
+                $ok = $user->register(
+                    $form['first_name'],
+                    $form['last_name'],
+                    $form['username'],
+                    $form['email'],
+                    $password,
+                    $form['gender'],
+                    $form['birth_date']
+                );
 
                 if ($ok) {
-                    if ($user->login($email, $password)) {
-                        $_SESSION['user'] = $email;
+                    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
+                    $loggedIn = $user->login($form['email'], $password); // now array|false
+                    if ($loggedIn) {
+                        $_SESSION['user_id'] = $loggedIn['id'];
+                        $_SESSION['user']    = $loggedIn['email'];
                         header('Location: ' . BASE_URL . '/index.php?controller=profile&action=index');
                         exit;
                     }
-                    $error = 'Registered, but auto-login failed. Please log in.';
+
+                    $errors[] = 'Registered, but auto-login failed. Please log in.';
                 } else {
-                    $error = 'Registration failed. Please try again.';
+                    $errors[] = 'Registration failed. Please try again.';
                 }
             }
         }
 
+        $error = null;
         include __DIR__ . '/../view/auth/register.php';
     }
 

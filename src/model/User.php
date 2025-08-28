@@ -51,13 +51,24 @@ class User
         return $stmt->fetch();
     }
 
-    public function login(string $email, string $password): bool
+    public function getUserByUsername($username) {
+        $stmt = $this->pdo->prepare("SELECT * FROM users where username=?");
+        $stmt->execute([$username]);
+        return $stmt->fetch();
+    }
+
+    public function login(string $email, string $password)
     {
         $stmt = $this->pdo->prepare("SELECT id, email, password FROM users WHERE email = ? LIMIT 1");
         $stmt->execute([$email]);
-        $row = $stmt->fetch();
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         if (!$row) return false;
-        return password_verify($password, $row['password']);
+
+        if (password_verify($password, $row['password'])) {
+            // don’t return password hash
+            return ['id' => (int)$row['id'], 'email' => $row['email']];
+        }
+        return false;
     }
 
     public function register($first_name, $last_name, $username, $email, $password, $gender, $birth_date): bool
