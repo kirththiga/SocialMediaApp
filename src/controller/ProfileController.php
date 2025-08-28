@@ -120,6 +120,16 @@ class ProfileController{
         header("Location: index.php?controller=profile&action=index");
         exit;
     }
+
+    public function feed(){
+        $email = $_SESSION['user'];
+        $user = $this->user->getUserByEmail($email);
+        
+        //shows all posts from database with username
+        $posts = $this->post->getAllRecentPosts();
+    
+        include __DIR__.'/../view/posts/feed.php';
+    }
 }
 
 ?>

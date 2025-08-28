@@ -18,8 +18,18 @@
             <button type="submit" value="Submit" class="btn btn-primary">Post</button>
         </form>
 
+        <!-- Tabs for Posts / Feed -->
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">My Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php?action=feed">Feed</a>
+            </li>
+        </ul>
+
         <!-- Posts List -->
-        <h3>Posts</h3>
+        <!-- <h3>Posts</h3> -->
         <?php if ($posts): ?>
             <?php foreach ($posts as $post): ?>
                 <div class="card mb-3">
