@@ -7,8 +7,14 @@
                         <h3 class="text-center mb-4">Register</h3>
 
                         <!-- Error message -->
-                        <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                        <?php if (!empty($errors)): ?>
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    <?php foreach ($errors as $e): ?>
+                                        <li><?= htmlspecialchars($e) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         <?php endif; ?>
 
                         <!-- Registration form -->
@@ -61,11 +67,32 @@
                                 </div>
                             </div>
 
+                            <!-- birthday -->
                             <div class="mb-3">
                                 <label class="form-label">Birth Date</label>
-                                <input type="date" name="birth_date" class="form-control" required
+                                <input type="text"
+                                       id="birthDate"
+                                       name="birth_date"
+                                       class="form-control"
+                                       placeholder="Select your birth date"
+                                       required
                                        value="<?= htmlspecialchars($_POST['birth_date'] ?? '') ?>">
                             </div>
+
+                            <!-- Flatpickr CSS & JS (CDN) -->
+                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+                            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+                            <script>
+                                flatpickr("#birthDate", {
+                                    dateFormat: "Y-m-d",             // matches your DB storage format
+                                    maxDate: "today",                // cannot pick a future date
+                                    defaultDate: "1990-01-01",       // optional, preselects
+                                    altInput: true,                  // shows a prettier format to user
+                                    altFormat: "F j, Y",             // e.g., January 1, 1990
+                                    yearRange: [1900, new Date().getFullYear()], // jump quickly to older years
+                                });
+                            </script>
 
                             <button type="submit" class="btn btn-primary w-100">Register</button>
                         </form>
