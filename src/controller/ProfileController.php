@@ -18,10 +18,11 @@ class ProfileController{
     }
 
     public function index(){
-        //show a list of posts
-        //$id = htmlspecialchars(trim($_POST["user_id"] ?? ''));
-        $id=2;
-        $user = $this->user->getUserById($id);
+        //show a list of posts for the user
+        $email = $_SESSION['user'];
+        $user = $this->user->getUserByEmail($email);
+        
+        $id = $user['id'];
         $posts = $this->post->getPostsByUserId($id);
         include __DIR__.'/../view/posts/index.php';
     }

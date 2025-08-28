@@ -21,4 +21,9 @@
 
     <p><strong>Location:</strong><br><?= htmlspecialchars($user['location']) ?></p>
     <p><strong>Bio:</strong><br><?= nl2br(htmlspecialchars($user['bio'])) ?></p>
+
+    <a href="index.php?action=edit_profile&user_id=<?= $user['id'] ?>" class="btn btn-sm btn-outline-primary mt-2">
+        Edit Profile
+    </a>
+
 </div>
