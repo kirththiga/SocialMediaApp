@@ -28,11 +28,12 @@ class ProfileController{
     }
 
     public function create(){
+        $error = null;
         $user_id = htmlspecialchars(trim($_GET["user_id"] ?? ''));
         $content = htmlspecialchars(trim($_POST["content"] ?? ''));
 
         if($user_id === '' || $content === '') {
-            die("Invalid input");
+            $error = 'Please fill in content';
         }
 
         // saves the user's input in the database
@@ -50,12 +51,13 @@ class ProfileController{
     }
 
     public function update(){
+        $error = null;
         $id = htmlspecialchars(trim($_POST["post_id"] ?? ''));
         $user_id = htmlspecialchars(trim($_POST["user_id"] ?? ''));
         $content = htmlspecialchars(trim($_POST["content"] ?? ''));
 
         if($id <=0 || $user_id === '' || $content === '') {
-            die("Invalid input");
+            $error = 'Please fill in content.';
         }
 
         // saves the updated information in the database
@@ -68,6 +70,55 @@ class ProfileController{
     public function delete($id){
         $this->post->deletePost($id);
         header("Location: index.php?controller=profile&action=index");
+    }
+
+    public function editProfile(){
+        // retreive profile to edit and display the information on the form
+        $email = $_SESSION['user'];
+        $user = $this->user->getUserByEmail($email);
+        include __DIR__.'/../view/profile/edit.php';
+    }
+
+    public function updateProfile(){
+        $error = null;
+        $first_name = htmlspecialchars(trim($_POST['first_name'] ?? ''));
+        $last_name = htmlspecialchars(trim($_POST['last_name'] ?? ''));
+        $username = htmlspecialchars(trim($_POST['username'] ?? ''));
+        $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+        $gender = htmlspecialchars($_POST['gender'] ?? '');
+        $birth_date = htmlspecialchars($_POST['birth_date'] ?? '');
+        $location = htmlspecialchars($_POST['location'] ?? '');
+        $bio = htmlspecialchars($_POST['bio'] ?? '');
+
+        $email = $_SESSION['user'];
+        $user = $this->user->getUserByEmail($email);
+        $id = $user['id'];
+        $password = $user['password'];
+        $profile_pic = $user['profile_pic'];
+
+        if (isset($_POST['remove_photo'])) {
+            $profile_pic = null;
+        }
+        elseif ($_FILES['profile_pic']['name'] != null) {
+            $file = $_FILES['profile_pic'];
+            $target_dir = '../uploads/';
+            $profile_pic = $target_dir . basename($file['name']);
+            move_uploaded_file($file['tmp_name'], $profile_pic);
+        }
+        
+        if (
+            $first_name === '' || $last_name === '' || $username === '' ||
+            $email === '' || $gender === '' || $birth_date === ''
+        ) 
+        {
+            $error = 'Please fill in all required fields.';
+        }
+
+        // saves the updated information in the database
+        $this->user->updateUser($id, $first_name, $last_name, $username, $email, $password, $gender, $birth_date, $location, $bio, $profile_pic);
+
+        header("Location: index.php?controller=profile&action=index");
+        exit;
     }
 }
 

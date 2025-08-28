@@ -72,6 +72,16 @@ switch ($controller) {
                     echo 'Bad Request';
                 }
                 break;
+            case 'edit_profile':
+                $ctrl->editProfile();
+                break;
+            case 'update_profile':
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') $ctrl->updateProfile();
+                else {
+                    http_response_code(405);
+                    echo 'Method Not Allowed';
+                }
+                break;
             default:
                 http_response_code(404);
                 echo 'Profile action not found';

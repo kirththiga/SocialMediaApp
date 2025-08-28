@@ -1,7 +1,5 @@
 <?php include __DIR__.'/../layouts/header.php'; ?>
 
-<!-- <title><?= htmlspecialchars($user['username']) ?>'s Profile</title> -->
-
 <div class="row">
     <!-- Left Column: Profile Info -->
     <?php include __DIR__.'/../layouts/profile-sidebar.php'; ?>
@@ -10,8 +8,13 @@
     <div class="col-md-9">
         <!-- Create Post Form -->
         <h3>Create a Post</h3>
+
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-danger"><?= $error ?></div>
+        <?php endif; ?>
+
         <form method="POST" action="index.php?action=create&user_id=<?= $user['id'] ?>" class="mb-4">
-            <textarea name="content" class="form-control mb-2" required></textarea>
+            <textarea name="content" class="form-control mb-2" rows="5" required></textarea>
             <button type="submit" value="Submit" class="btn btn-primary">Post</button>
         </form>
 
