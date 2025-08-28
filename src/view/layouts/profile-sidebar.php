@@ -1,9 +1,11 @@
 <!-- Left Column: Profile Info -->
 <div class="col-md-3">
-    <!-- Profile Picture https://via.placeholder.com/150-->
-    <img src="<?= $user['profile_pic'] ? htmlspecialchars($user['profile_pic']) : '' ?>" 
-            alt="Profile Picture" 
-            class="profile-pic mb-3">
+    <!-- Profile Picture -->
+    <?php if ($user['profile_pic']): ?>
+        <img src="<?= $user['profile_pic'] ? htmlspecialchars($user['profile_pic']) : '' ?>" 
+                alt="Profile Picture" 
+                class="profile-pic mb-3">
+    <?php endif; ?>
 
     <!-- Full Name -->
     <h3><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></h3>

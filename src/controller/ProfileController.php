@@ -28,11 +28,12 @@ class ProfileController{
     }
 
     public function create(){
+        $error = null;
         $user_id = htmlspecialchars(trim($_GET["user_id"] ?? ''));
         $content = htmlspecialchars(trim($_POST["content"] ?? ''));
 
         if($user_id === '' || $content === '') {
-            die("Invalid input");
+            $error = 'Please fill in content';
         }
 
         // saves the user's input in the database
@@ -50,12 +51,13 @@ class ProfileController{
     }
 
     public function update(){
+        $error = null;
         $id = htmlspecialchars(trim($_POST["post_id"] ?? ''));
         $user_id = htmlspecialchars(trim($_POST["user_id"] ?? ''));
         $content = htmlspecialchars(trim($_POST["content"] ?? ''));
 
         if($id <=0 || $user_id === '' || $content === '') {
-            die("Invalid input");
+            $error = 'Please fill in content.';
         }
 
         // saves the updated information in the database
@@ -78,6 +80,7 @@ class ProfileController{
     }
 
     public function updateProfile(){
+        $error = null;
         $first_name = htmlspecialchars(trim($_POST['first_name'] ?? ''));
         $last_name = htmlspecialchars(trim($_POST['last_name'] ?? ''));
         $username = htmlspecialchars(trim($_POST['username'] ?? ''));
@@ -96,7 +99,7 @@ class ProfileController{
         if (isset($_POST['remove_photo'])) {
             $profile_pic = null;
         }
-        elseif (isset($_FILES['profile_pic'])) {
+        elseif ($_FILES['profile_pic']['name'] != null) {
             $file = $_FILES['profile_pic'];
             $target_dir = '../uploads/';
             $profile_pic = $target_dir . basename($file['name']);
@@ -108,7 +111,7 @@ class ProfileController{
             $email === '' || $gender === '' || $birth_date === ''
         ) 
         {
-            die("Invalid input");
+            $error = 'Please fill in all required fields.';
         }
 
         // saves the updated information in the database

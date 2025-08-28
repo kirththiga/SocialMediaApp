@@ -2,41 +2,44 @@
 
 <h2>Edit Profile</h2>
 
+<?php if (!empty($error)): ?>
+    <div class="alert alert-danger"><?= $error ?></div>
+<?php endif; ?>
+
 <form method="POST" action="index.php?action=update_profile&user_id=<?= $user['id'] ?>" enctype="multipart/form-data">
 
     <div class="mb-3">
         <label>First Name</label>
-        <input type="text" name="first_name" class="form-control" value="<?= htmlspecialchars($user['first_name']) ?>">
+        <input type="text" name="first_name" class="form-control" value="<?= htmlspecialchars($user['first_name']) ?>" required>
     </div>
 
     <div class="mb-3">
         <label>Last Name</label>
-        <input type="text" name="last_name" class="form-control" value="<?= htmlspecialchars($user['last_name']) ?>">
+        <input type="text" name="last_name" class="form-control" value="<?= htmlspecialchars($user['last_name']) ?>" required>
     </div>
 
     <div class="mb-3">
         <label>Username</label>
-        <input type="text" name="username" class="form-control" value="<?= htmlspecialchars($user['username']) ?>">
+        <input type="text" name="username" class="form-control" value="<?= htmlspecialchars($user['username']) ?>" required>
     </div>
 
     <div class="mb-3">
         <label>Email</label>
-        <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>">
+        <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" required>
     </div>
 
     <div class="mb-3">
         <label>Gender</label>
-        <select name="gender" class="form-control">
+        <select name="gender" class="form-control" required>
             <option value="">Select</option>
             <option value="male" <?= $user['gender']=='male'?'selected':'' ?>>Male</option>
             <option value="female" <?= $user['gender']=='female'?'selected':'' ?>>Female</option>
-            <option value="other" <?= $user['gender']=='other'?'selected':'' ?>>Other</option>
         </select>
     </div>
 
     <div class="mb-3">
         <label>Birth Date</label>
-        <input type="date" name="birth_date" class="form-control" value="<?= htmlspecialchars($user['birth_date']) ?>">
+        <input type="date" name="birth_date" class="form-control" value="<?= htmlspecialchars($user['birth_date']) ?>" required>
     </div>
 
     <div class="mb-3">
