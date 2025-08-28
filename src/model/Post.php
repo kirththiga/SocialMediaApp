@@ -39,5 +39,11 @@ namespace src\model;
             $stmt-> execute([$user_id]);
             return $stmt->fetchAll();
         }
+
+        // Retrieves all posts and includes the usernames.
+        public function getAllRecentPosts(){
+            $stmt = $this->pdo->query("SELECT p.*, u.username FROM posts p JOIN users u ON p.user_id = u.id ORDER BY created_at DESC");
+            return $stmt->fetchAll();
+        }
     }
 ?>

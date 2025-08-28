@@ -82,6 +82,9 @@ switch ($controller) {
                     echo 'Method Not Allowed';
                 }
                 break;
+            case 'feed':
+                $ctrl->feed();
+                break;
             default:
                 http_response_code(404);
                 echo 'Profile action not found';
