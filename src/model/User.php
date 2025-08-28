@@ -44,6 +44,13 @@ class User
         return $stmt->fetch();
     }
 
+    public function getUserByEmail($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users where email=?");
+        $stmt->execute([$email]);
+        return $stmt->fetch();
+    }
+
     public function login(string $email, string $password): bool
     {
         $stmt = $this->pdo->prepare("SELECT id, email, password FROM users WHERE email = ? LIMIT 1");
