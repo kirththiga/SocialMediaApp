@@ -1,4 +1,5 @@
-<?php include __DIR__.'/../layouts/header.php'; ?>
+<?php include __DIR__.'/../layouts/header.php';
+require_once __DIR__ . '/../../security/csrf.php'; ?>
 
 <div class="row">
     <!-- Left Column: Profile Info -->
@@ -14,6 +15,7 @@
         <?php endif; ?>
 
         <form method="POST" action="index.php?action=create&user_id=<?= $user['id'] ?>" class="mb-4">
+            <?= csrf_input('post_create') ?>
             <textarea name="content" class="form-control mb-2" rows="5" required></textarea>
             <button type="submit" value="Submit" class="btn btn-primary">Post</button>
         </form>
@@ -44,6 +46,7 @@
                         <br>
                         <a href="index.php?action=edit&user_id=<?= $user['id'] ?>&post_id=<?= $post['id'] ?>" class="btn btn-sm btn-warning mt-2">Edit</a>
                         <form method="POST" action="index.php?action=delete" style="display:inline;">
+                            <?= csrf_input('post_delete') ?>
                             <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
                             <button type="submit" class="btn btn-sm btn-danger mt-2"
                                     onclick="return confirm('Are you sure you want to delete this post?');">
