@@ -1,31 +1,67 @@
 <!-- Left Column: Profile Info -->
-<div class="col-md-3">
-    <!-- Profile Picture -->
-    <?php if ($user['profile_pic']): ?>
-        <img src="<?= $user['profile_pic'] ? htmlspecialchars($user['profile_pic']) : '' ?>" 
-                alt="Profile Picture" 
-                class="profile-pic mb-3">
-    <?php endif; ?>
+<div class="col-md-3 d-flex justify-content-center">
+    <aside class="profile-sidebar card card-elevated">
+        <div class="profile-header">
+            <?php if (!empty($user['profile_pic'])): ?>
+                <img
+                        src="<?= htmlspecialchars($user['profile_pic']) ?>"
+                        alt="Profile Picture"
+                        class="profile-avatar"
+                >
+            <?php else: ?>
+                <div class="profile-avatar placeholder">
+                    <?= strtoupper(substr($user['first_name'] ?? 'U', 0, 1)) ?>
+                </div>
+            <?php endif; ?>
 
-    <!-- Full Name -->
-    <h3><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></h3>
-    <p class="text-muted">@<?= htmlspecialchars($user['username']) ?></p>
+            <h3 class="profile-name">
+                <?= htmlspecialchars(($user['first_name'] ?? '') . ' ' . ($user['last_name'] ?? '')) ?>
+            </h3>
+            <p class="profile-username">@<?= htmlspecialchars($user['username'] ?? '') ?></p>
 
-    <p><strong>Email:</strong><br><?= htmlspecialchars($user['email']) ?></p>
-    <p><strong>Gender:</strong><br><?= htmlspecialchars(ucfirst($user['gender'])) ?></p>
+            <!-- Bootstrap Blue Edit Button -->
+            <a href="<?= BASE_URL ?>/index.php?controller=profile&action=edit_profile&user_id=<?= (int)$user['id'] ?>"
+               class="btn btn-primary btn-sm w-100 mt-2">
+                Edit Profile
+            </a>
+        </div>
 
-    <?php if ($user['birth_date']): ?>
-        <p><strong>Birthday:</strong><br><?= date('F j', strtotime($user['birth_date'])) ?></p>
-        <p><strong>Birth Year:</strong><br><?= date('Y', strtotime($user['birth_date'])) ?></p>
-    <?php else: ?>
-        <p><strong>Birth Date:</strong> -</p>
-    <?php endif; ?>
+        <hr class="profile-divider">
 
-    <p><strong>Location:</strong><br><?= htmlspecialchars($user['location']) ?></p>
-    <p><strong>Bio:</strong><br><?= nl2br(htmlspecialchars($user['bio'])) ?></p>
+        <ul class="profile-meta list-unstyled">
+            <li>
+                <span class="meta-label">Email</span>
+                <span class="meta-value"><?= htmlspecialchars($user['email'] ?? '') ?></span>
+            </li>
+            <li>
+                <span class="meta-label">Gender</span>
+                <span class="meta-value"><?= htmlspecialchars(ucfirst($user['gender'] ?? '')) ?></span>
+            </li>
+            <li>
+                <span class="meta-label">Birthday</span>
+                <span class="meta-value">
+          <?php if (!empty($user['birth_date'])): ?>
+              <?= date('F j, Y', strtotime($user['birth_date'])) ?>
+          <?php else: ?>
+              —
+          <?php endif; ?>
+        </span>
+            </li>
+            <li>
+                <span class="meta-label">Location</span>
+                <span class="meta-value"><?= htmlspecialchars($user['location'] ?? '') ?></span>
+            </li>
+        </ul>
 
-    <a href="index.php?action=edit_profile&user_id=<?= $user['id'] ?>" class="btn btn-sm btn-outline-primary mt-2">
-        Edit Profile
-    </a>
-
+        <?php if (!empty($user['bio'])): ?>
+            <hr class="profile-divider">
+            <div class="profile-bio">
+                <div class="meta-label mb-1">Bio</div>
+                <p class="bio-text mb-0">
+                    <?= nl2br(htmlspecialchars($user['bio'])) ?>
+                </p>
+                <button class="btn btn-link p-0 mt-1 bio-toggle" type="button">See more</button>
+            </div>
+        <?php endif; ?>
+    </aside>
 </div>

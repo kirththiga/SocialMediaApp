@@ -6,7 +6,10 @@ body {
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    max-width: 280px;
+    width: 100%;
+
 }
 
 .profile-pic {
@@ -29,7 +32,7 @@ form button {
 
 .card {
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
 }
 
@@ -55,4 +58,107 @@ form button {
     display: block;
     margin-top: 10px;
     font-size: 0.85rem;
+}
+
+/* Profile Sidebar */
+.profile-sidebar {
+    border-radius: 16px !important;
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+    margin-bottom: 12px;
+}
+
+.profile-avatar.placeholder {
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 2.25rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand-700));
+}
+
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2px 0 0 0;
+}
+
+.profile-username {
+    color: var(--muted);
+    margin: 4px 0 0 0;
+}
+
+.profile-divider {
+    border-color: var(--border);
+    margin: 16px 0;
+    opacity: .6;
+}
+
+.profile-meta > li {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.profile-meta > li:last-child {
+    border-bottom: 0;
+}
+
+.meta-label {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+}
+
+.meta-value {
+    font-weight: 600;
+    color: var(--text);
+    word-break: break-word;
+}
+
+.profile-bio p {
+    line-height: 1.55;
+    color: var(--text);
+}
+.bio-text {
+    max-height: 4.5em;          /* ~3 lines */
+    overflow: hidden;
+    position: relative;
+}
+.bio-text.truncated::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 1.5em;
+    background: linear-gradient(to bottom, transparent, var(--surface));
+}
+
+.bio-toggle {
+    font-size: .85rem;
+    color: var(--brand);
+    text-decoration: none;
+}
+.bio-toggle:hover {
+    text-decoration: underline;
 }
