@@ -83,8 +83,6 @@ class ProfileController{
         $error = null;
         $first_name = htmlspecialchars(trim($_POST['first_name'] ?? ''));
         $last_name = htmlspecialchars(trim($_POST['last_name'] ?? ''));
-        $username = htmlspecialchars(trim($_POST['username'] ?? ''));
-        $email = htmlspecialchars(trim($_POST['email'] ?? ''));
         $gender = htmlspecialchars($_POST['gender'] ?? '');
         $birth_date = htmlspecialchars($_POST['birth_date'] ?? '');
         $location = htmlspecialchars($_POST['location'] ?? '');
@@ -92,6 +90,7 @@ class ProfileController{
 
         $email = $_SESSION['user'];
         $user = $this->user->getUserByEmail($email);
+        $username = $user['username'];
         $id = $user['id'];
         $password = $user['password'];
         $profile_pic = $user['profile_pic'];

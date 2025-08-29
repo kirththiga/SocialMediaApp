@@ -22,12 +22,12 @@ require_once __DIR__ . '/../../security/csrf.php';
 
     <div class="mb-3">
         <label>Username</label>
-        <input type="text" name="username" class="form-control" value="<?= htmlspecialchars($user['username']) ?>" required>
+        <input type="text" name="username" class="form-control" value="<?= htmlspecialchars($user['username']) ?>" disabled>
     </div>
 
     <div class="mb-3">
         <label>Email</label>
-        <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" required>
+        <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" disabled>
     </div>
 
     <div class="mb-3">
