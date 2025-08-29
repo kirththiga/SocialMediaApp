@@ -1,4 +1,6 @@
-<?php include __DIR__.'/../layouts/header.php'; ?>
+<?php include __DIR__.'/../layouts/header.php';
+require_once __DIR__ . '/../../security/csrf.php';
+?>
 
 <h2>Edit Profile</h2>
 
@@ -7,7 +9,7 @@
 <?php endif; ?>
 
 <form method="POST" action="index.php?action=update_profile&user_id=<?= $user['id'] ?>" enctype="multipart/form-data">
-
+    <?= csrf_input('profile_update'); ?>
     <div class="mb-3">
         <label>First Name</label>
         <input type="text" name="first_name" class="form-control" value="<?= htmlspecialchars($user['first_name']) ?>" required>

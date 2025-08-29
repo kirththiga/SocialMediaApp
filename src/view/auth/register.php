@@ -1,4 +1,9 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
+<?php
+
+include __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../../security/csrf.php';
+
+?>
     <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 80vh;">
         <div class="row justify-content-center w-100">
             <div class="col-12 col-sm-8 col-md-6 col-lg-4" style="max-width: 500px;">
@@ -6,7 +11,6 @@
                     <div class="card-body p-4">
                         <h3 class="text-center mb-4">Register</h3>
 
-                        <!-- Error message -->
                         <?php if (!empty($errors)): ?>
                             <div class="alert alert-danger">
                                 <ul class="mb-0">
@@ -17,8 +21,8 @@
                             </div>
                         <?php endif; ?>
 
-                        <!-- Registration form -->
-                        <form method="post" action="index.php?controller=auth&action=register" novalidate>
+                        <form method="post" action="<?= BASE_URL ?>/index.php?controller=auth&action=register" novalidate>
+                            <?= csrf_input('register_form') ?>
                             <div class="mb-3">
                                 <input type="text" name="first_name" class="form-control"
                                        placeholder="First Name" required
@@ -82,15 +86,14 @@
                             <!-- Flatpickr CSS & JS (CDN) -->
                             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
                             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
                             <script>
                                 flatpickr("#birthDate", {
-                                    dateFormat: "Y-m-d",             // matches your DB storage format
-                                    maxDate: "today",                // cannot pick a future date
-                                    defaultDate: "1990-01-01",       // optional, preselects
-                                    altInput: true,                  // shows a prettier format to user
-                                    altFormat: "F j, Y",             // e.g., January 1, 1990
-                                    yearRange: [1900, new Date().getFullYear()], // jump quickly to older years
+                                    dateFormat: "Y-m-d",
+                                    maxDate: "today",
+                                    defaultDate: "1990-01-01",
+                                    altInput: true,
+                                    altFormat: "F j, Y",
+                                    yearRange: [1900, new Date().getFullYear()]
                                 });
                             </script>
 
