@@ -81,7 +81,7 @@ switch ($controller) {
 
             case 'delete':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['post_id'])) {
-                    $csrf->handle('post_delete');
+                    $csrf->handle();
                     $ctrl->delete($_POST['post_id']);
                 } else {
                     http_response_code(400);
