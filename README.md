@@ -54,3 +54,6 @@ Image uploads in posts
 Friend/follow system
 
 REST API for integration
+
+
+### Made by Murugupillai, Kirththiga & Echavarria-Mercier, Aleksandro
