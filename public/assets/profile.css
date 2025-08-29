@@ -1,3 +1,14 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.profile-sidebar {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
 .profile-pic {
     width: 150px;
     height: 150px;
@@ -6,5 +17,42 @@
     border: 3px solid #ddd;
 }
 
+form textarea {
+    border-radius: 8px;
+    resize: none;
+    padding: 10px;
+}
 
+form button {
+    border-radius: 8px;
+}
 
+.card {
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card .btn {
+    margin-right: 5px;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.nav-tabs .nav-link {
+    border-radius: 8px 8px 0 0;
+}
+
+.card small.text-muted {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
