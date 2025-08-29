@@ -2,21 +2,6 @@ body {
     background-color: #f8f9fa;
 }
 
-.profile-sidebar {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
-
-.profile-pic {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #ddd;
-}
-
 form textarea {
     border-radius: 8px;
     resize: none;
@@ -55,4 +40,88 @@ form button {
     display: block;
     margin-top: 10px;
     font-size: 0.85rem;
+}
+
+.profile-sidebar {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    max-height: none;
+    overflow-y: auto;
+    overflow-x: visible;
+    top: 70px;    
+    z-index: 100;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .profile-sidebar {
+        position: relative;
+        top: 0;
+    }
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #f0f0f0;
+    max-width: 100%;
+}
+
+.profile-info {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding-left: 0;
+    margin: 0;
+}
+
+.profile-info li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    overflow-wrap: break-word;
+}
+
+.profile-info i {
+    font-size: 1rem;
+    min-width: 20px;
+}
+
+.profile-sidebar hr {
+    margin: 1rem 0;
+    border-top: 1px solid #949292;
+}
+
+/* Bio wraps below icon and stack icon above text */
+.profile-info li.bio-item {
+    flex-direction: column; 
+}
+
+.profile-info li.bio-item i {
+    margin-bottom: 5px;
+}
+
+.profile-info li.bio-item span {
+    display: block;
+    white-space: normal;    
+    word-break: break-word; 
+}
+
+/* Bio truncated to 3 lines initially */
+#bio {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+/* show full bio */
+#bio.expanded {
+    -webkit-line-clamp: unset;
 }

@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/../layouts/header.php';
 require_once __DIR__ . '/../../security/csrf.php'; ?>
 
-    <div class="row">
+    <div class="row g-4">
         <!-- Left Column: Profile Info -->
         <?php include __DIR__ . '/../layouts/profile-sidebar.php'; ?>
 
@@ -31,7 +31,6 @@ require_once __DIR__ . '/../../security/csrf.php'; ?>
             </ul>
 
             <!-- Posts List -->
-            <!-- <h3>Posts</h3> -->
             <?php if ($posts): ?>
                 <?php foreach ($posts as $post): ?>
                     <div class="card mb-3">
