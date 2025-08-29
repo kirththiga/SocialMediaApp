@@ -1,13 +1,56 @@
-# Social Media Application
+# Social Media App
 
-Login / Registration / Authentication
- - Session Management, pull & store users in a users table
- - Password hashing, validation
+A simple PHP + MySQL + Bootstrap web application that allows users to register, log in, edit their profile, and create posts.
 
-Posts feed page
-- Pulls in all recent posts sorted by newest to oldest from a posts table
-- can implement comments and likes
+## Features
+- User registration and login (session-based authentication)
+- Profile management (picture, bio, gender, birthday, email)
+- Bio truncation with “See more” toggle
+- Posts displayed in a central feed
+- Bootstrap-styled UI with responsive layout
+- Secure password hashing and CSRF protection
 
-Profile page
-- Pulls in information stored in a userdata table.
-- Can show posts made by user on their own page based on post ID & UserID
+## Tech Stack
+- **Backend:** PHP 8+
+- **Frontend:** Bootstrap 5, custom CSS
+- **Database:** MySQL
+- **Server:** Apache (XAMPP recommended)
+
+## Installation
+1. Clone or extract the project into your web server root (e.g. `htdocs` for XAMPP).
+
+2. Import the database schema:
+
+   ```sql
+   CREATE DATABASE social_media_app;
+   USE social_media_app;
+   SOURCE database/schema.sql;
+
+3. Update database credentials in config/config.php:
+
+	```$host = "localhost";
+	$dbname = "social_media_app";
+	$user = "root";
+	$password = "";
+
+4. Start Apache and MySQL, then open in your browser:
+
+	http://localhost/SocialMediaApp/public
+
+## Project Structure
+
+config/        # Database configuration  
+database/      # schema.sql for setup  
+includes/      # header, footer, csrf helpers  
+public/        # main pages (index, login, register, profile, logout)  
+assets/        # css, js, images  
+
+## Future Improvements
+
+Likes & comments on posts
+
+Image uploads in posts
+
+Friend/follow system
+
+REST API for integration
