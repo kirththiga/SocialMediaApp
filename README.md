@@ -57,11 +57,11 @@ REST API for integration
 
 ## Test Accounts
 #### Account 1: 
-email: harry@gmail.com 
+email: harry@gmail.com,
 password: 123456
 
 #### Account 2:
-email: anna@gmail.com 
+email: anna@gmail.com,
 password: password
 
 ### Made by Murugupillai, Kirththiga & Echavarria-Mercier, Aleksandro
